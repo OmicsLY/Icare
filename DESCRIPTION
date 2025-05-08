@@ -37,7 +37,6 @@ Imports:
     workflows
 Suggests:
     conflicted,
-    SCP,
     testthat,
     pheatmap,
     plotly

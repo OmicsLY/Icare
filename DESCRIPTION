@@ -66,8 +66,7 @@ Imports:
     parallel,
     snowfall,
     stats,
-    dplyr
-biocViews: 
+    dplyr,    
     CoxBoost,
     superpc,
     BiocGenerics,
@@ -77,4 +76,4 @@ biocViews:
 Suggests: 
     conflicted
 Remotes:
-    david-cortes/outliertree
+    github::david-cortes/outliertree

@@ -71,13 +71,13 @@ Imports:
     BiocParallel,
     mixOmics,
     workflows,
-    bonsai,
-    SCP
+    bonsai
 Suggests: 
     conflicted,
     CoxBoost,
     superpc,
-    survcomp
+    survcomp,
+    SCP
 Remotes:
     github::david-cortes/outliertree,
     github::zhanghao-njmu/SCP

@@ -70,7 +70,8 @@ Imports:
     BiocGenerics,
     BiocParallel,
     mixOmics,
-    workflows
+    workflows,
+    bonsai
 Suggests: 
     conflicted,
     CoxBoost,

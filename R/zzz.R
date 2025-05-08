@@ -15,7 +15,12 @@
   missing_pkgs <- required_bioc_pkgs[
     !sapply(required_bioc_pkgs, requireNamespace, quietly = TRUE)
   ]
-
+  if (!requireNamespace("SCP", quietly = TRUE)) {
+    packageStartupMessage(
+      "Optional package 'SCP' not found.\n",
+      "Install with: remotes::install_github(\"zhanghao-njmu/SCP\")"
+    )
+  }
   if (length(missing_pkgs) > 0) {
     packageStartupMessage(
       "This package requires Bioconductor packages:\n",

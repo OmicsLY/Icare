@@ -66,15 +66,15 @@ Imports:
     parallel,
     snowfall,
     stats,
-    dplyr,    
-    CoxBoost,
-    superpc,
+    dplyr,   
     BiocGenerics,
     BiocParallel,
     mixOmics,
-    survcomp,
     workflows
 Suggests: 
-    conflicted
+    conflicted,
+    CoxBoost,
+    superpc,
+    survcomp
 Remotes:
     github::david-cortes/outliertree

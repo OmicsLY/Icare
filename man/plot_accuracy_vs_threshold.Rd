@@ -7,7 +7,6 @@
 plot_accuracy_vs_threshold(
   threshold_metrics,
   title = "Accuracy vs Threshold",
-  theme = theme_scp(),
   palette_name = "Zissou1",
   base_size = 14,
   save_plots = TRUE,
@@ -21,8 +20,6 @@ plot_accuracy_vs_threshold(
 accuracy metrics. The data frame must have at least two columns: 'Threshold' and 'Accuracy'.}
 
 \item{title}{A character string specifying the title of the plot. Default is "Accuracy vs Threshold".}
-
-\item{theme}{A ggplot2 theme object for customizing the plot appearance. Default is \code{theme_scp()}.}
 
 \item{palette_name}{A character string specifying the color palette for the plot. Default is "Zissou1".}
 

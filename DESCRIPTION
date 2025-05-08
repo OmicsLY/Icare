@@ -71,8 +71,8 @@ biocViews:
     superpc,
     BiocGenerics,
     BiocParallel,
-    mixOmics
+    mixOmics,
+    survcomp
 Suggests: 
     conflicted
-Remotes:
-    bhklab/survcomp
+

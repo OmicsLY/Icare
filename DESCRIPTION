@@ -71,7 +71,8 @@ Imports:
     BiocParallel,
     mixOmics,
     workflows,
-    bonsai
+    bonsai,
+    SCP
 Suggests: 
     conflicted,
     CoxBoost,

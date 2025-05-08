@@ -1,84 +1,53 @@
 Package: Icare
-Title: What the Package Does (One Line, Title Case)
+Title: Your Package Title
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+    person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
+Description: Package description here.
+License: MIT + file LICENSE
+URL: https://github.com/yourname/Icare
+BugReports: https://github.com/yourname/Icare/issues
 Depends: 
     R (>= 4.4.0)
 Imports:
-    BiocManager
-    tidyr ,
-    tibble,
-    stringr,
-    survival ,
-    glmnet,
-    randomForestSRC,
-    MASS,
-    rms,
-    boot,
-    ggplot2 ,
-    gridExtra,
-    ggprism,
-    RColorBrewer,
-    caret,
-    lightgbm,
-    kernelshap,
-    pROC,
-    flextable,
-    officer,
-    here,
-    Hmisc,
-    scales,
-    timeROC,
-    minerva,
-    mice,
-    recipes,
-    reshape2,
-    plsRcox,
-    nortest,
-    outliertree,
-    infotheo,
-    Information,
-    maxstat,
-    rmda,
-    ROSE,
-    ggridges,
-    ggsignif,
-    paletteer,
-    wesanderson,
-    pheatmap,
-    corrplot,
-    factoextra,
-    survminer,
-    plotly,
-    patchwork,
-    ggtext,
-    Rtsne,
-    umap,
-    NMF,
     autoReg,
-    doParallel,
-    parallel,
+    boot,
+    bonsai,
+    caret,
+    dplyr,
+    flextable,
+    ggplot2,
+    glmnet,
+    here,
+    kernelshap,
+    lightgbm,
+    MASS,
+    mice,
+    officer,
+    pROC,
+    randomForestSRC,
+    recipes,
+    rms,
     snowfall,
     stats,
-    dplyr,   
-    BiocGenerics,
-    BiocParallel,
-    mixOmics,
-    workflows,
-    bonsai
-Suggests: 
+    survival,
+    tibble,
+    tidyr,
+    timeROC,
+    workflows
+Suggests:
     conflicted,
-    CoxBoost,
-    superpc,
-    survcomp,
-    SCP
+    SCP,
+    testthat,
+    pheatmap,
+    plotly
 Remotes:
     github::david-cortes/outliertree,
     github::zhanghao-njmu/SCP
+Config/recommends:
+    mixOmics,
+    BiocGenerics,
+    BiocParallel,
+    CoxBoost,
+    superpc,
+    survcomp

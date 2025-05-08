@@ -72,7 +72,8 @@ Imports:
     BiocGenerics,
     BiocParallel,
     mixOmics,
-    survcomp
+    survcomp,
+    workflows
 Suggests: 
     conflicted
 Remotes:

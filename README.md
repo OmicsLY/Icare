@@ -32,7 +32,7 @@ It offers four main applications:
    ✓ 项目名称：`Icare_Analysis`  
    ✓ 存储路径：选择你的工作目录
    
-## 可视化函数标准化参数配置说明
+​**可视化函数标准化参数配置说明**​<br>
 所有可视化函数均支持以下标准化参数配置，用户可根据实际需求调整这些参数以自定义输出效果：<br>
 使用wesanderson调色板:<br>
 `palette_name = "AsteroidCity1"`<br>
@@ -112,7 +112,7 @@ object_stat<-state_plot_missing_data(object_stat)
 <img src="https://github.com/OmicsLY/Icare/blob/master/fig/combined_missing_data_plot.png" alt="Screenshot" width="500">
 </div>
 
-**缺失值处理**
+**缺失值处理**<br>
 对缺失值进行处理，支持以下两种方法：<br>
 - **mice**：多重插补法，适合数据缺失机制复杂的情况。<br>
 - **median_mode**：中位数/众数填补法，适合数据缺失机制简单的情况。<br>

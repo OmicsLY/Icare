@@ -75,4 +75,5 @@ biocViews:
     survcomp
 Suggests: 
     conflicted
-
+Remotes:
+    david-cortes/outliertree

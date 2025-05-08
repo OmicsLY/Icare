@@ -230,7 +230,7 @@ object_stat <- plot_numeric_descriptive(object_stat,plot_type = "violin")
 </div>
 
 <div align="center">
-<img src="https://github.com/OmicsLY/Icare/blob/master/fig/violin_plot_part_5.png" alt="Screenshot" width="500">
+<img src="https://github.com/OmicsLY/Icare/blob/master/fig/violin_plot_part_55.png" alt="Screenshot" width="500">
 </div>
 
 
@@ -328,7 +328,7 @@ cross_plot_analysis(object_stat, vars = c("cl", "cr"))
 ```
 
 <div align="center">
-<img src="https://github.com/OmicsLY/Icare/blob/master/fig/scatter_plot_cl_vs_cr.png" alt="Screenshot" width="500">
+<img src="https://github.com/OmicsLY/Icare/blob/master/fig/scatter_plot_cl_vs_cr_00.png" alt="Screenshot" width="500">
 </div>
 
 #### 1.9 差异分析与可视化
@@ -583,7 +583,7 @@ object_model<-ModelTrainAnalysis(object_model,
 ```
 
 <div align="center">
-<img src="https://github.com/OmicsLY/Icare/blob/master/fig/roc_curves.png" alt="Screenshot" width=800">
+<img src="https://github.com/OmicsLY/Icare/blob/master/fig/roc_curves.png" alt="Screenshot" width=500">
 </div>
 
 **提取最佳模型结果**<br>

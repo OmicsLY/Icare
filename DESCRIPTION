@@ -79,4 +79,5 @@ Suggests:
     superpc,
     survcomp
 Remotes:
-    github::david-cortes/outliertree
+    github::david-cortes/outliertree,
+    github::zhanghao-njmu/SCP

@@ -34,7 +34,8 @@ Imports:
     tibble,
     tidyr,
     timeROC,
-    workflows
+    workflows,
+    shapviz
 Suggests:
     conflicted,
     testthat,

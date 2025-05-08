@@ -10,7 +10,6 @@ ModelThreshold(
   threshold_metrics = NULL,
   method_threshold = c("max_accuracy", "closest_ppv", "closest_npv"),
   title = NULL,
-  theme = theme_scp(),
   palette_name = "Zissou1",
   base_size = 14,
   save_plots = TRUE,
@@ -33,8 +32,6 @@ It can be one of: "max_accuracy", "closest_ppv", or "closest_npv". Default is "m
 
 \item{title}{A character string specifying the title of the plot. If \code{NULL}, a default title
 will be used based on the method selected. Default is \code{NULL}.}
-
-\item{theme}{A ggplot2 theme object for customizing the plot appearance. Default is \code{theme_scp()}.}
 
 \item{palette_name}{A character string specifying the color palette for the plot. Default is "Zissou1".}
 

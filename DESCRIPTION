@@ -40,15 +40,12 @@ Imports:
     recipes,
     reshape2,
     plsRcox,
-    CoxBoost,
-    superpc,
     nortest,
     outliertree,
     infotheo,
     Information,
     maxstat,
     rmda,
-    survcomp,
     ROSE,
     ggridges,
     ggsignif,
@@ -64,13 +61,18 @@ Imports:
     Rtsne,
     umap,
     NMF,
-    webshot,
     doParallel,
     parallel,
     snowfall,
-    dplyr,
-    stats
+    stats,
+    dplyr
+biocViews: 
+    CoxBoost,
+    superpc,
+    BiocGenerics,
+    BiocParallel,
+    mixOmics
 Suggests: 
     conflicted
-
-    
+Remotes:
+    bhklab/survcomp

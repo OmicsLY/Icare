@@ -335,7 +335,6 @@ plot_ppv_vs_threshold <- function(threshold_metrics,
 
 plot_npv_vs_threshold <- function(threshold_metrics,
                                   title = "NPV vs Threshold (Closest to 0.95)",
-                                  theme = theme_scp(),
                                   palette_name = "Zissou1",
                                   base_size = 14,
                                   save_plots = TRUE,
@@ -367,8 +366,7 @@ plot_npv_vs_threshold <- function(threshold_metrics,
       panel.grid.major = element_line(color = "#d9d9d9", linetype = "dashed"),
       panel.grid.minor = element_blank(),
       panel.background = element_rect(fill = "#f0f0f0", color = NA)
-    ) +
-    theme
+    )
 
   if (save_plots) {
     ggsave(filename = file.path(save_dir, "npv_vs_threshold_closest_to_0.95.pdf"),

@@ -1,80 +1,75 @@
 Package: Icare
-Title: What the Package Does (One Line, Title Case)
+Title: Integrated Clinical Analysis and Risk Evaluation
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("John", "Doe", email = "john.doe@example.com", 
+           role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0000-0000-0000"))
+Description: 
+    Provides tools for clinical data preprocessing, survival analysis, 
+    and machine learning model development. Includes specialized functions for 
+    handling missing data, outlier detection, and risk stratification.
+License: GPL-3
 Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
-Depends: 
+URL: https://github.com/OmicsLY/Icare
+BugReports: https://github.com/OmicsLY/Icare/issues
+Depends:
     R (>= 4.4.0)
 Imports:
-    tidyr ,
-    tibble,
-    stringr,
-    survival ,
-    glmnet,
-    randomForestSRC,
-    MASS,
-    rms,
-    boot,
-    ggplot2 ,
-    gridExtra,
-    ggprism,
-    RColorBrewer,
+    # 数据预处理
+    dplyr (>= 1.1.0),
+    tidyr,
+    recipes,
+    here,
+    # 机器学习
     caret,
+    parsnip,
+    workflows,
+    bonsai,
     lightgbm,
     kernelshap,
-    pROC,
-    flextable,
-    officer,
-    here,
-    Hmisc,
-    scales,
-    timeROC,
-    minerva,
-    mice,
-    recipes,
-    reshape2,
-    plsRcox,
+    # 统计与转换
+    MASS,
+    car,
     nortest,
-    outliertree,
     infotheo,
-    Information,
-    maxstat,
-    rmda,
-    ROSE,
+    minerva,
+    # 可视化
+    ggplot2 (>= 3.4.0),
+    ggprism,
+    ggpubr,
     ggridges,
-    ggsignif,
-    paletteer,
-    wesanderson,
+    gridExtra,
     pheatmap,
     corrplot,
-    factoextra,
-    survminer,
-    plotly,
-    patchwork,
-    ggtext,
-    Rtsne,
-    umap,
-    NMF,
-    autoReg,
-    doParallel,
+    viridis,
+    wesanderson,
+    # 生存分析
+    survival,
+    pROC,
+    timeROC,
+    # 表格输出
+    flextable,
+    officer,
+    # 并行计算
     parallel,
-    snowfall,
+    doParallel,
+    foreach,
+    # 其他工具
+    methods,
     stats,
-    dplyr,    
-    CoxBoost,
-    superpc,
-    BiocGenerics,
-    BiocParallel,
-    mixOmics,
-    survcomp,
-    foreach
-Suggests: 
-    conflicted,
-    outliertree
+    Hmisc,
+    ROSE,
+    smotefamily,
+    shapviz,
+    reshape2,
+    scales
+Suggests:
+    testthat,
+    knitr,
+    rmarkdown
+Remotes:
+    david-cortes/outliertree  # 如果outliertree从GitHub安装
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
 LazyData: true

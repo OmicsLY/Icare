@@ -16,24 +16,24 @@ BugReports: https://github.com/OmicsLY/Icare/issues
 Depends:
     R (>= 4.0.0)
 Imports:
-    dplyr (>= 1.0.0),
-    tidyr (>= 1.2.0),
-    recipes (>= 0.2.0),
+    dplyr,
+    tidyr,
+    recipes,
     reshape2,
-    caret (>= 6.0.90),
-    parsnip (>= 1.0.0),
-    workflows (>= 1.0.0),
+    caret,
+    parsnip ,
+    workflows,
     bonsai,
-    lightgbm (>= 3.3.0),
+    lightgbm,
     kernelshap,
     Hmisc,
     nortest,
-    pROC (>= 1.18.0),
+    pROC,
     car,
     infotheo,
     minerva,
     Information,
-    ggplot2 (>= 3.4.0),
+    ggplot2,
     ggprism,
     ggpubr,
     ggridges,
@@ -57,7 +57,7 @@ Imports:
     ROSE,
     smotefamily
 Suggests:
-    testthat (>= 3.0.0),
+    testthat,
     knitr,
     rmarkdown
 Roxygen: list(markdown = TRUE)

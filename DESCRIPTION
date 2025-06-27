@@ -75,7 +75,6 @@ Imports:
     survcomp,
     foreach
 Suggests: 
-    conflicted
-Remotes:
-    github::david-cortes/outliertree
+    conflicted,
+    outliertree
 LazyData: true

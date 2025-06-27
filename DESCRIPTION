@@ -1,79 +1,73 @@
 Package: Icare
-Title: What the Package Does (One Line, Title Case)
+Title: Integrated Clinical Analysis and Risk Evaluation
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("John", "Doe", email = "john.doe@example.com", 
+           role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0000-0000-0000"))
+Description: 
+    Provides tools for clinical data preprocessing, survival analysis, 
+    and machine learning model development. Includes specialized functions for 
+    handling missing data, outlier detection, and risk stratification.
+License: GPL-3
 Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
-Depends: 
-    R (>= 4.0.0)
+URL: https://github.com/OmicsLY/Icare
+BugReports: https://github.com/OmicsLY/Icare/issues
+Depends:
+    R (>= 4.4.0)
 Imports:
-    tidyr ,
-    tibble,
-    stringr,
-    survival ,
-    glmnet,
-    randomForestSRC,
-    MASS,
-    rms,
-    boot,
-    ggplot2 ,
-    gridExtra,
-    ggprism,
-    RColorBrewer,
+    dplyr,
+    tidyr,
+    recipes,
+    here,
     caret,
+    parsnip,
+    workflows,
+    bonsai,
     lightgbm,
     kernelshap,
-    pROC,
-    flextable,
-    officer,
-    here,
-    Hmisc,
-    scales,
-    timeROC,
-    minerva,
-    mice,
-    recipes,
-    reshape2,
-    plsRcox,
+    MASS,
+    car,
     nortest,
-    outliertree,
     infotheo,
+    minerva,
     Information,
-    maxstat,
-    rmda,
-    ROSE,
+    autoReg,
+    ggplot2,
+    ggprism,
+    ggpubr,
     ggridges,
-    ggsignif,
-    paletteer,
-    wesanderson,
+    gridExtra,
     pheatmap,
     corrplot,
-    factoextra,
-    survminer,
-    plotly,
+    viridis,
+    wesanderson,
     patchwork,
-    ggtext,
-    Rtsne,
-    umap,
-    NMF,
-    autoReg,
-    doParallel,
+    survival,
+    pROC,
+    timeROC,
+    flextable,
+    officer,
     parallel,
-    snowfall,
-    stats,
-    dplyr,    
+    doParallel,
+    foreach,
+    Hmisc,
+    ROSE,
+    smotefamily,
+    shapviz,
+    reshape2,
+    scales
+Suggests:
+    testthat,
+    knitr,
+    rmarkdown,
+    conflicted,
+    rms,
     CoxBoost,
-    superpc,
     BiocGenerics,
     BiocParallel,
     mixOmics,
-    survcomp,
-    foreach
-Suggests: 
-    conflicted
+    survcomp
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
 LazyData: true

@@ -16,8 +16,8 @@ BugReports: https://github.com/OmicsLY/Icare/issues
 Depends:
     R (>= 4.4.0)
 Imports:
-    # 数据预处理
-    dplyr (>= 1.1.0),
+    # 核心数据处理
+    dplyr,
     tidyr,
     recipes,
     here,
@@ -28,14 +28,16 @@ Imports:
     bonsai,
     lightgbm,
     kernelshap,
-    # 统计与转换
+    # 统计分析与转换
     MASS,
     car,
     nortest,
     infotheo,
     minerva,
+    Information,
+    autoReg,
     # 可视化
-    ggplot2 (>= 3.4.0),
+    ggplot2,
     ggprism,
     ggpubr,
     ggridges,
@@ -44,11 +46,12 @@ Imports:
     corrplot,
     viridis,
     wesanderson,
+    patchwork,
     # 生存分析
     survival,
     pROC,
     timeROC,
-    # 表格输出
+    # 报告输出
     flextable,
     officer,
     # 并行计算
@@ -56,8 +59,6 @@ Imports:
     doParallel,
     foreach,
     # 其他工具
-    methods,
-    stats,
     Hmisc,
     ROSE,
     smotefamily,
@@ -67,7 +68,8 @@ Imports:
 Suggests:
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    conflicted
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 LazyData: true

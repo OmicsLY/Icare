@@ -68,8 +68,6 @@ Suggests:
     testthat,
     knitr,
     rmarkdown
-Remotes:
-    david-cortes/outliertree  # 如果outliertree从GitHub安装
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 LazyData: true

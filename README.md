@@ -183,7 +183,7 @@ object_model<-NormalizeData(object_model,
                          normalize_method = "auto")
 ```
 
-####1.4 特征筛选与特征子集过滤
+#### 1.4 特征筛选与特征子集过滤
 `SelFeatureSet` 函数用于从数据集中选择最优特征子集，支持基于以下方法的特征选择：
 - 信息值（IV）​：评估特征与目标变量之间的关联强度。<br>
 - ​最大信息系数（MIC）​：衡量特征与目标变量之间的非线性关系。<br>
@@ -215,7 +215,7 @@ object_model <- FilterDataFeatures(object_model)
 </div>
 
 
-####1.5 模型训练与分析
+#### 1.5 模型训练与分析
 
 **训练模型**<br>
 
@@ -297,7 +297,6 @@ object_model <- SelectBestModel(object_model, custom_selection = "rf")
 ##可视化当前模型的超参数调优结果
 object_model <- ModelHyperparameterPlot(object_model)
 
-
 ##智能生成并执行参数调优
 object_model <- ModelTuneSuggestion(object_model)
 
@@ -306,44 +305,40 @@ object_model <- ModelTuneComparison(object_model)
 ```
 
 
+#### 1.6 模型评估
 
-
-**最佳模型混淆矩阵生成**<br>
-`ModelBestCM`函数用于从 `Train_Model`对象中提取性能最佳模型，并在测试集上生成混淆矩阵及其可视化图表。<br>
-如果输入是 Train_Model 对象，函数会自动更新其 best.model.result 槽位<br>
-
+**最佳模型对象生成**<br>
+`Best_Model` 是一个 S4 类，用于封装最优模型的完整信息，包括模型对象、性能指标和解释性分析结果。<br>
+配套的 CreateBestModel 函数提供了灵活的构建方式，支持从训练过程自动提取或手动指定最优模型信息<br>
 ``` r
+object_best<-CreateBestModel(object=object_model)
 
-# 生成最佳模型的混淆矩阵
-object_model <- ModelBestCM(object_model)
-```
-<div align="center">
-<img src="https://github.com/OmicsLY/Icare/blob/master/fig/confusion_matrix_plot.png" alt="Screenshot" width=500">
-</div>
-
-**特征重要性分析**<br>
-`FeatureImportance` 函数用于从 `Train_Model` 对象中提取最佳模型，并计算其特征重要性。<br>
-支持自定义显示前 top_n 个重要特征默`top_n = 15`，并生成可视化图表。<br>
-如果输入是 Train_Model 对象，函数会自动更新其 best.model.result 槽位<br>
-
-``` r
-# 计算特征重要性并生成可视化图表
-object_model<-FeatureImportance(object_model,
-                             top_n =15)
 ```
 <div align="center">
 <img src="https://github.com/OmicsLY/Icare/blob/master/fig/Feature_Importance.png" alt="Screenshot" width=500">
 </div>
 
-**SHAP 值分析模块**<br>
-`ModelShap` 函数用于从` Train_Model `对象中提取最佳模型，并生成 SHAP（SHapley Additive exPlanations）值分析的可视化图表。<br>
-支持生成 Beeswarm 图、Force 图和 Waterfall 图<br>
-如果输入是 Train_Model 对象，函数会自动更新其 shap.result 槽位<br>
+**特征重要性分析**<br>
+`FeatureImportance` 函数用于从 `Best_Model` 对象中提取最佳模型，并计算其特征重要性。<br>
+支持自定义显示前 top_n 个重要特征默`top_n = 15`，并生成可视化图表。<br>
 
 ``` r
+# 计算特征重要性并生成可视化图表
+object_best<-FeatureImportance(object_best,
+                             top_n =5)
+```
+<div align="center">
+<img src="https://github.com/OmicsLY/Icare/blob/master/fig/Feature_Importance.png" alt="Screenshot" width=500">
+</div>
 
+
+**SHAP 值分析模块**<br>
+`ModelShap` 函数用于从` Best_Model `对象中提取最佳模型，并生成 SHAP（SHapley Additive exPlanations）值分析的可视化图表。<br>
+支持生成 Beeswarm 图、Force 图和 Waterfall 图<br>
+
+``` r
 # 生成 SHAP 值分析的可视化图表
-object_model <- ModelShap(object_model)
+object_best <- ModelShap(object_best)
 ```
 <div align="center">
 <img src="https://github.com/OmicsLY/Icare/blob/master/fig/shap_beeswarm_plot.png" alt="Screenshot" width=500">
@@ -359,68 +354,74 @@ object_model <- ModelShap(object_model)
 
 
 
-**添加外部验证集**<br>
-`Extract_external_validata` 函数用于将外部验证数据集添加到 Train_Model 对象中。<br>
-支持从 Stat 对象或直接提供的数据框中提取验证数据<br>
-如果输入是 Train_Model 对象，函数会自动更新其filtered.set槽位存储外部验证集<br>
+**最优阈值**<br>
+`ModelThreshold`是一个用于确定最佳分类阈值的函数，专为 `Best_Model` 类对象设计。<br>
+它通过多种优化标准（如准确率、PPV、NPV或Youden指数）自动计算最优分类阈值，并将结果更新到原始模型中。<br>
+##  阈值优化方法
+| 方法          | 数学公式                    |  应用场景                        |
+|-----------------|------------------------------------------|--------------------------------------------|
+| ​**accuracy**​    | max(TP + TN) / (TP + TN + FP + FN)      | 平衡分类任务              |
+| ​**ppv**​         | max(TP) / (TP + FP)                     | 高精度需求（如癌症筛查） |
+| ​**npv**​         | max(TN) / (TN + FN)                     | 排除诊断（如术前评估） |
+| ​**youden**​      | max(Sensitivity + Specificity - 1)      | 平衡灵敏度和特异度    |
 
 ``` r
-
-# 直接提供验证数据并更新 `Train_Model` 对象
-data(val_data)
-validation_data <- val_data
-object_model <- Extract_external_validata(data = validation_data, object_model = object_model)
-
-# 从 `Stat` 对象中提取验证数据并更新 `Train_Model` 对象
-object_model <- Extract_external_validata(object_stats = object_val, object_model = object_model)
-
+object_best <- ModelThreshold(object_best,
+                              method = "youden")  
 ```
-**模型外部验证**<br>
-`ModelValidation`函数用于对 `Train_Model` 对象中的最佳模型进行外部验证。<br>
-支持在独立验证集上评估模型性能，生成 ROC 曲线<br>
-如果输入是 Train_Model 对象，函数会自动更新其 best.model.result 槽位<br>
+**混淆矩阵**<br>
+`ModelBestCM` 是一个用于生成和可视化最佳模型混淆矩阵的函数，可以自动从`Best_Model`对象中获取最优分类阈值,<br>
+支持手动指定阈值 (`best_threshold `参数),根据参`set_type`在不同数据集上生成混淆矩阵。<br>
 
 ``` r
-# 进行模型外部验证
-object_model <- ModelValidation(object_model)
+# 评估阶段
+object_best <- ModelBestCM(object_best, set_type = "test")                 # 测试集
+object_best <- ModelBestCM(object_best, set_type = "validation")          # 验证集
+object_best <- ModelBestCM(object_best, set_type = "external_validation") # 外部验证集
+
+
 ```
 <div align="center">
 <img src="https://github.com/OmicsLY/Icare/blob/master/fig/validation_roc_plot.png" alt="Screenshot" width=500">
 </div>
 
-####1.5 模型临床应用 
 
-**模型阈值选择**
-`ModelThreshold` 函数用于从 `Train_Model` 对象中提取最佳模型，并在测试集上选择最佳阈值。<br>
-支持基于最大准确率、最接近 0.95 的 PPV 或 NPV 来选择阈值，并生成相应的可视化图表。<br>
-如果输入是 Train_Model 对象，函数会自动更新其best.model.result槽位存储最优阈值<br>
-
+**评估模型性能**<br>
+`ModelPerformance` 是一个集成了多数据集评估、灵活阈值选择、结果自动化保存和模型对象更新的统一性能评估框架，支持在训练集、测试集、验证集和外部验证集上全面分析模型表现，并能自动将评估结果整合到 `Best_Model` 对象中。
 
 ``` r
-# 选择最佳阈值并生成可视化图表
-object_model<-ModelThreshold(object_model,
-                          method_threshold="max_accuracy")
+object_best <- ModelPerformance(object_best)               
 ```
+`ModelBestRoc` 是一个专业化的模型评估函数，能够自动提取最优模型并在多数据集（训练集、测试集、验证集和外部验证集）上生成包含AUC及置信区间的专业级ROC曲线比较图，同时将分析结果整合回原对象以便后续分析。
+
+``` r
+object_best <- ModelBestRoc(object_best)
+```
+
 <div align="center">
 <img src="https://github.com/OmicsLY/Icare/blob/master/fig/accuracy_vs_threshold_curve.png" alt="Screenshot" width=500">
 </div>
 
-**临床预测**<br>
-`ModelClinicalPrediction`函数用于使用`Train_Model`对象中的最佳模型对新临床数据进行预测。<br>
-支持基于最佳阈值生成预测结果，并可视化预测概率和分类。<br>
-可根据上述函数`ModelThreshold`得到的结果也可以自定义，这里选取通用的0.5
+
+#### 1.7 临床应用
+**数据处理**<br>
+`process_new_data` 能够对新数据应用与训练数据完全一致的预处理流程（包括缺失值处理、异常值检测和变量选择），并根据需求返回原始数据或标准化数据，确保模型预测阶段的数据处理与训练阶段保持严格一致。
 
 ``` r
-# 对新临床数据进行预测
-# 使用 ModelClinicalPrediction 进行预测（自动提取最佳阈值）
-Clinical_results <- ModelClinicalPrediction(object = object_model, new_data = new_data)
-
-# 使用自定义阈值进行预测
-Clinical_results <- ModelClinicalPrediction(object = object_model, new_data = new_data, best_threshold = 0.5)
+new_data<-PrepareData(new_data,
+                      save_dir = here::here("ModelData", "clinical_predictions"),
+                      csv_filename = "new_data.csv")
+new_data <- process_new_data(object = object_best, new_data = new_data)
 ```
 <div align="center">
 <img src="https://github.com/OmicsLY/Icare/blob/master/fig/prediction_visualization.png" alt="Screenshot" width=500">
 </div>
 
+**临床应用**<br>
+`ModelClinicalPrediction` 是一个专为临床预测设计的可视化函数，能够自动调用最佳模型对新数据进行分类预测并应用最优阈值，同时生成专业可视化图表并保存预测结果和图形输出。智能阈值决策系统（支持自动继承 ModelThreshold 函数计算的最优分类阈值或接受用户自定义阈值）
 
-
+``` r
+re1 <- ModelClinicalPrediction(object = object_best, 
+                               new_data = new_data,
+                               best_threshold =0.5)
+```

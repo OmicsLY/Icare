@@ -50,6 +50,9 @@ if (!require("devtools")) install.packages("devtools")
 # 从GitHub安装Icare包
 devtools::install_github("OmicsLY/Icare")
 
+#轻量级安装（推荐使用）：
+remotes::install_github("OmicsLY/Icare")
+
 # 加载包
 library(Icare)
 ```
@@ -82,7 +85,7 @@ object_model <- PrepareData(object_model)
 `SplitDatModel`函数用于将数据按比例拆分为训练集和测试集。<br>
 基于分组列`group_col`进行分层拆分，以确保训练集和测试集中的类别分布一致。<br>
 默认训练集`train_ratio=0.7`测试集，`test_ratio=0.3`<br>
-如果输入是 `Train_Model 对象`，函数会自动更新对象的`split.data`槽位，存储数据划分结果。<br>
+如果输入是 `Train_Model` 对象，函数会自动更新对象的`split.data`槽位，存储数据划分结果。<br>
 `Extract_validata`是一个​验证集提取函数，主要用于从新数据中分离出验证集并与现有模型对象整合。<br>
 `Extract_external_validation`用于提取外部验证集。<br>
 ``` r
@@ -91,16 +94,14 @@ object_model<-SplitDatModel(object_model,
                          train_ratio = 0.7,
                          test_ratio = 0.3)
 # 提取验证集
-object_model <- Extract_validata(data = new_data, object_model = object_model)
-# 提取外部验证集
-object_model <- Extract_external_validation(data = new_data, object_model = object_model)
+object_model <- Extract_validata(data = valid_data, object_model = object_model)
 
 ```
 #### 1.3 数据清洗
 **数据缺失值删除**<br>
 `ModelRemoveMiss`是一个专门处理机器学习数据集中的缺失值问题。<br>
 该函数自动识别并移除高缺失率的变量和样本，同时确保训练集、测试集、验证集和外部验证集保持一致的变量集合。<br>
-`miss_threshold`为缺失率阈值(%)，超过此值的变量/样本将被移除<br>
+`miss_threshold`为缺失率阈值(%)，缺失率超过此值的变量/样本将被移除。<br>
 
 ``` r
 # 使用Train_Model对象
@@ -109,13 +110,20 @@ object_model <- ModelRemoveMiss(object_model,
                                
 ```
 **数据缺失值填补**<br>
-`ModelApplyMiss`该函数自动识别并填补训练集、测试集、验证集和外部验证集中的缺失值，支持多种填补方法（如mice、均值、中位数等），并确保各数据集间填补策略的一致性。<br>
+`ModelApplyMiss`该函数自动识别并填补训练集、测试集、验证集和外部验证集中的缺失值，支持多种填补方法（如mice、中位数等），并确保各数据集间填补策略的一致性。<br>
 如果输入是 Train_Model 对象，函数会自动对象的split.data槽位（包含填补后的数据集）、process.info槽位（包含填补详情）。<br>
 ``` r
+
+##使用多重插补的方式进行数据缺失值填补
 object_model<-ModelApplyMiss(object_model, 
               impute_method = "mice",
               m = 10,
               save_data = TRUE)
+
+##使用中位数的方式进行数据缺失值填补
+object_model <- ModelApplyMiss(object_model,
+                               impute_method = "median_mode")
+
 ```
 
 **异常值检测**<br>
@@ -140,7 +148,7 @@ object_model <- ModelHandleOutliers(object_model,
 **数据平衡处理**<br>
 `BalanceData`函数用于处理数据中的类别不平衡问题，支持过采样（over）、欠采样（under）或两者结合（both）的方法。默认使用 both 方法`method = "both"`。<br>
 该函数根据类别不平衡情况自动选择是否进行平衡处理，并提供了可视化功能，用于展示平衡前后的类别分布。<br>
-如果类别不平衡比例低于 默认`imbalance_threshold=0.15` 或样本大小超过 默认`sample_size_threshold=1500`，则不会进行平衡处理，除非`force_balance=TRUE`<br>
+如果类别不平衡比例低于 默认`imbalance_threshold=0.15` 或样本大小超过 默认`sample_size_threshold=1500`，则不会进行平衡处理，除非`force_balance=TRUE`则执行强制平衡处理，且平衡过程只针对训练集。<br>
 
 ``` r
 # 使用 Train_Model 对象进行数据平衡处理
@@ -156,8 +164,10 @@ object_model <- BalanceData(object_model,
 <img src="https://github.com/OmicsLY/Icare/blob/master/fig/class_distribution_balance.png" alt="Screenshot" width="500">
 </div>
 
+
+
 **数据标准化**<br>
-`NormalizeData` 提供端到端数据标准化解决方案，自动选择最优方法并确保多数据集标准化一致性，支持结果导出，也可用参数`normalize_method`指定选择想要的数据标准化方式。
+`NormalizeData` 提供端到端数据标准化解决方案，自动选择最优方法并确保多数据集标准化一致性，支持结果导出，也可用参数`normalize_method`指定选择想要的数据标准化方式。<br>
 多种标准化方法： <br>
 | 方法名称                 | 描述                                                                 |
 |--------------------------|----------------------------------------------------------------------|
@@ -192,7 +202,7 @@ object_model<-NormalizeData(object_model,
 该函数通过计算不同特征数量下的 AUC（Area Under Curve）值，选择最优特征子集，并可视化 AUC 随特征数量的变化趋势。<br>
 - `AUC_change_threshold `是用于判断特征选择过程中 AUC（Area Under Curve）值变化的阈值。当增加特征数量时，如果 AUC 的提升幅度小于该阈值，则认为继续增加特征数量对模型性能的提升不再显著，从而停止特征选择。默认值`AUC_change_threshold=0.01`，即 AUC 变化小于 1% 时，选择当前特征数量为最优。<br>
 - `max_feature`为筛选得到最大特征子集数量，默认`max_feature=NULL`，即使用所有特征。<br>
-- data_type用于指定进行特征筛选的数据类型，可选值为 "clean"（清洗后的数据）或 "scale"（标准化后的数据）默认`data_type = "clean"`<br>
+- `data_type`用于指定进行特征筛选的数据类型，可选值为 "clean"（清洗后的数据）或 "scale"（标准化后的数据）默认`data_type = "clean"`<br>
 
 `FilterDataFeatures` 函数用于根据特征选择结果或直接使用完整数据集，过滤训练集和测试集，保留最优特征子集或全部特征。<br>
 该函数支持从清洗后或标准化后的数据中进行过滤，并更新 `Train_Model` 对象的 `filtered.set` 槽位。<br>
@@ -221,11 +231,12 @@ object_model <- FilterDataFeatures(object_model)
 
 
 `ModelTrainAnalysis` 函数用于训练多个机器学习模型，评估其性能，并生成 ROC 曲线和性能指标。支持多种模型（如 GBM、随机森林、SVM 等），并允许自定义超参数调优和交叉验证设置。<br>
-`methods`:模型名称列表，默认为 `methods=c("gbm", "rf", "svmLinear", "svmRadial", "glmnet")`<br>
+`methods`:模型名称列表，默认为 ` methods = c("glm", "rpart", "naive_bayes", "bayesglm", "rf",
+                                           "xgbTree", "svmRadial", "svmLinear", "gbm", "earth", "glmnet")`<br>
 `tune_grids`:模型超参数调优网格，默认为预定义的调优网格<br>
 `classProbs`：是否计算类别概率，默认为 TRUE。<br>
 `allowParallel`：是否启用并行计算，默认为 TRUE。<br>
-` loocv_threshold = 100`当样本量<100时自动切换为留一法(LOOCV)
+`loocv_threshold = 100`当样本量<100时自动切换为留一法(LOOCV)。<br>
 如果输入是 Train_Model 对象，函数会自动更新其 all.results 槽位（用于存储所有模型在训练集上的性能分析结果）和 train.models 槽位（用于存储训练完成的所有模型），并返回更新后的对象。<br>
 
 
@@ -323,7 +334,7 @@ object_best<-CreateBestModel(object=object_model)
 支持自定义显示前 top_n 个重要特征默`top_n = 15`，并生成可视化图表。<br>
 
 ``` r
-# 计算特征重要性并生成可视化图表
+# 计算特征重要性并生成可视化图表,展示前5个特征
 object_best<-FeatureImportance(object_best,
                              top_n =5)
 ```
@@ -377,7 +388,7 @@ object_best <- ModelThreshold(object_best,
 # 评估阶段
 object_best <- ModelBestCM(object_best, set_type = "test")                 # 测试集
 object_best <- ModelBestCM(object_best, set_type = "validation")          # 验证集
-object_best <- ModelBestCM(object_best, set_type = "external_validation") # 外部验证集
+
 
 
 ```
@@ -408,6 +419,10 @@ object_best <- ModelBestRoc(object_best)
 `process_new_data` 能够对新数据应用与训练数据完全一致的预处理流程（包括缺失值处理、异常值检测和变量选择），并根据需求返回原始数据或标准化数据，确保模型预测阶段的数据处理与训练阶段保持严格一致。
 
 ``` r
+###以valid_data为示例
+new_data<-valid_data
+new_data$group<-NULL
+
 new_data<-PrepareData(new_data,
                       save_dir = here::here("ModelData", "clinical_predictions"),
                       csv_filename = "new_data.csv")

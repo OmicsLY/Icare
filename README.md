@@ -160,10 +160,6 @@ object_model <- BalanceData(object_model,
 
 ```
 
-<div align="center">
-<img src="https://github.com/OmicsLY/Icare/blob/master/fig/class_distribution_balance.png" alt="Screenshot" width="500">
-</div>
-
 
 
 **数据标准化**<br>
@@ -221,7 +217,7 @@ object_model <- SelFeatureSet(object_model,
 object_model <- FilterDataFeatures(object_model)
 ```
 <div align="center">
-<img src="https://github.com/OmicsLY/Icare/blob/master/fig/Combined_AUC_vs_Features.png" alt="Screenshot" width="500">
+<img src="https://github.com/OmicsLY/Icare/blob/master/fig/Feature_Selection_Performance.png" alt="Screenshot" width="500">
 </div>
 
 
@@ -314,7 +310,13 @@ object_model <- ModelTuneSuggestion(object_model)
 ##对比调优前后的模型性能
 object_model <- ModelTuneComparison(object_model)
 ```
+<div align="center">
+<img src="https://github.com/OmicsLY/Icare/blob/master/fig/hyperparameter_tuning_curve.png" alt="Screenshot" width=500">
+</div>
 
+<div align="center">
+<img src="https://github.com/OmicsLY/Icare/blob/master/fig/tuning_comparison.png" alt="Screenshot" width=500">
+</div>
 
 #### 1.6 模型评估
 
@@ -325,9 +327,6 @@ object_model <- ModelTuneComparison(object_model)
 object_best<-CreateBestModel(object=object_model)
 
 ```
-<div align="center">
-<img src="https://github.com/OmicsLY/Icare/blob/master/fig/Feature_Importance.png" alt="Screenshot" width=500">
-</div>
 
 **特征重要性分析**<br>
 `FeatureImportance` 函数用于从 `Best_Model` 对象中提取最佳模型，并计算其特征重要性。<br>
@@ -356,7 +355,7 @@ object_best <- ModelShap(object_best)
 </div>
 
 <div align="center">
-<img src="https://github.com/OmicsLY/Icare/blob/master/fig/shap_force_plot.png" alt="Screenshot" width=500">
+<img src="https://github.com/OmicsLY/Icare/blob/master/fig/shap_force_plot_.png" alt="Screenshot" width=500">
 </div>
 
 <div align="center">
@@ -393,7 +392,7 @@ object_best <- ModelBestCM(object_best, set_type = "validation")          # 验�
 
 ```
 <div align="center">
-<img src="https://github.com/OmicsLY/Icare/blob/master/fig/validation_roc_plot.png" alt="Screenshot" width=500">
+<img src="https://github.com/OmicsLY/Icare/blob/master/fig/roc_youden_plot.png" alt="Screenshot" width=500">
 </div>
 
 
@@ -410,7 +409,7 @@ object_best <- ModelBestRoc(object_best)
 ```
 
 <div align="center">
-<img src="https://github.com/OmicsLY/Icare/blob/master/fig/accuracy_vs_threshold_curve.png" alt="Screenshot" width=500">
+<img src="https://github.com/OmicsLY/Icare/blob/master/fig/best_model_roc_plot.png" alt="Screenshot" width=500">
 </div>
 
 
